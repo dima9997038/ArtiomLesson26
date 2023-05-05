@@ -100,8 +100,7 @@ public class Application {
 
     private void customComparing(List<Show> shows) {
         Scanner scanner = new Scanner(System.in);
-        LinkedHashMap<String, Show> conditions = new LinkedHashMap<>();
-        LinkedHashMap<String, String> keyOfConditional = new LinkedHashMap<>();
+        Map<String, String> keyOfConditional = new LinkedHashMap<>();
         choiceCriteria();
         boolean forLoop = true;
         int choice = scanner.nextInt();
@@ -156,12 +155,9 @@ public class Application {
             }
 
         }
-        shows.stream()
-                .sorted((h1, h2) -> {
-                    keyOfConditional.forEach((key, value) -> conditions.put(key + ":" + value, h2));
-                    return h1.compareTo(conditions);
-                })
-                .forEach(System.out::println);
+        MyComparator myComparator=new MyComparator(keyOfConditional);
+        shows.sort(myComparator);
+        shows.forEach(System.out::println);
     }
 
     private static void choiceCriteria() {
