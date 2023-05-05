@@ -1,6 +1,9 @@
 package by.teachmeskills.penkovsky.homework25;
 
-public abstract class Show {
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public abstract class Show implements Comparable<LinkedHashMap<String, Show>> {
     private final String title;
     private final int releaseYear;
     private final String country;
@@ -39,5 +42,75 @@ public abstract class Show {
 
     public int getNumberOfRatings() {
         return numberOfRatings;
+    }
+
+    @Override
+    public int compareTo(LinkedHashMap<String, Show> conditions) {
+        if (conditions == null) {
+            return 0;
+        }
+        int val = 0;
+        for (Map.Entry<String, Show> entry : conditions.entrySet()) {
+            Show value = entry.getValue();
+            switch (entry.getKey()) {
+                case ("title:asc") -> {
+                    String title = this.getTitle();
+                    val = title.compareTo(value.getTitle());
+                    if (val != 0) {
+                        return val;
+                    }
+                }
+                case ("title:desc") -> {
+                    String title = this.getTitle();
+                    val = title.compareTo(value.getTitle());
+                    if (val != 0) {
+                        return val * -1;
+                    }
+                }
+                case ("releaseYear:asc") -> {
+                    Integer releaseYear = this.getReleaseYear();
+                    val = releaseYear.compareTo(value.getReleaseYear());
+                    if (val != 0) {
+                        return val;
+                    }
+                }
+                case ("releaseYear:desc") -> {
+                    Integer releaseYear = this.getReleaseYear();
+                    val = releaseYear.compareTo(value.getReleaseYear());
+                    if (val != 0) {
+                        return val * -1;
+                    }
+                }
+                case ("rating:asc") -> {
+                    Float rating = this.getRating();
+                    val = rating.compareTo(value.getRating());
+                    if (val != 0) {
+                        return val;
+                    }
+                }
+                case ("rating:desc") -> {
+                    Float rating = this.getRating();
+                    val = rating.compareTo(value.getRating());
+                    if (val != 0) {
+                        return val * -1;
+                    }
+                }
+                case ("numberOfRatings:asc") -> {
+                    Integer numberOfRatings = this.getNumberOfRatings();
+                    val = numberOfRatings.compareTo(value.getNumberOfRatings());
+                    if (val != 0) {
+                        return val;
+                    }
+                }
+                case ("numberOfRatings:desc") -> {
+                    Integer numberOfRatings = this.getNumberOfRatings();
+                    val = numberOfRatings.compareTo(value.getNumberOfRatings());
+                    if (val != 0) {
+                        return val * -1;
+                    }
+                }
+            }
+        }
+        return val;
     }
 }
